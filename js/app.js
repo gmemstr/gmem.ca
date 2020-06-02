@@ -37,26 +37,3 @@ class Experiment {
         element.append(x)
     }
 }
-
-// Tagged template function for parsing a string of text as HTML objects
-// <3 @innovati for this brilliance.
-const html = (strings, ...things) => {
-    // Our "body", where we'll render stuff.
-    const element = document.getElementById("steam")
-    let x = document.createRange().createContextualFragment(
-      strings.reduce(
-        (markup, string, index) => {
-          markup += string
-  
-          if (things[index]) {
-            markup += things[index]
-          }
-  
-          return markup
-        },
-        ''
-      )
-    )
-    element.innerHTML = ""
-    element.append(x)
-}
