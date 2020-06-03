@@ -28,7 +28,17 @@ type InGameInfo struct {
 }
 
 func getSteamData() SteamProfile {
-	resp, err := http.Get("https://steamcommunity.com/id/gmemstr?xml=1")
+	client := &http.Client{}
+
+	req, err := http.NewRequest("GET", "https://steamcommunity.com/id/gmemstr?xml=1", nil)
+	if err != nil {
+		os.Stdout.Write([]byte(err.Error()))
+		return SteamProfile{}
+	}
+
+	req.Header.Add("Cache-Control", "no-cache")
+	resp, err := client.Do(req)
+
 	if err != nil {
 		os.Stdout.Write([]byte(err.Error()))
 		return SteamProfile{}
