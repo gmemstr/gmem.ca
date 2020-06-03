@@ -2,7 +2,10 @@ const fetchSteamStatus = async () => {
     let response = await fetch("/api/steam")
     let data = await response.json()
     let experiment = new Experiment("steam")
-    experiment.html`SteamID: ${data.steamId} Online State: ${data.onlineState}`
+    experiment.html`
+    <h2>Steam Status</h2>
+    <p>SteamID: ${data.steamId} Online State: ${data.onlineState}</p>
+    `
 }
 
 const loadApp = async () => {
