@@ -4,6 +4,7 @@ package handler
 import (
 	"encoding/json"
 	"encoding/xml"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -37,6 +38,9 @@ func getSteamData() SteamProfile {
 	}
 
 	req.Header.Add("Cache-Control", "no-cache")
+	req.Header.Add("Pragma", "no-cache")
+	fmt.Println(req.Header)
+
 	resp, err := client.Do(req)
 	if err != nil {
 		os.Stdout.Write([]byte(err.Error()))
@@ -44,7 +48,6 @@ func getSteamData() SteamProfile {
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
-	os.Stdout.Write([]byte(body[0:1000]))
 
 	var steamData SteamProfile
 	err = xml.Unmarshal([]byte(body), &steamData)
