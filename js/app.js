@@ -2,9 +2,11 @@ const fetchSteamStatus = async () => {
     let response = await fetch("/api/steam")
     let data = await response.json()
     let experiment = new Experiment("steam")
+
     experiment.html`
     <h2>Steam Status</h2>
     <p>SteamID: ${data.steamId} Online State: ${data.onlineState}</p>
+    ${data.onlineState === 'in-game' && data.inGameInfo !== null ? `<img src=${data.inGameInfo.logo}>${data.inGameInfo.name}` : ''}
     `
 }
 
