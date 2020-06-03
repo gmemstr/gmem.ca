@@ -4,10 +4,12 @@ package handler
 import (
 	"encoding/json"
 	"encoding/xml"
-	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"net/http"
 	"os"
+	"strings"
+	"time"
 )
 
 // SteamProfile contains very basic information about
@@ -28,18 +30,26 @@ type InGameInfo struct {
 	Logo string `xml:"gameLogo" json:"logo"`
 }
 
+func genCacheBust(length int) string {
+	rand.Seed(time.Now().UnixNano())
+	chars := []rune("ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+		"abcdefghijklmnopqrstuvwxyz" +
+		"0123456789")
+	var b strings.Builder
+	for i := 0; i < length; i++ {
+		b.WriteRune(chars[rand.Intn(len(chars))])
+	}
+	return b.String()
+}
+
 func getSteamData() SteamProfile {
 	client := &http.Client{}
 
-	req, err := http.NewRequest("GET", "https://steamcommunity.com/id/gmemstr?xml=1", nil)
+	req, err := http.NewRequest("GET", "https://steamcommunity.com/id/gmemstr?xml=1&cachebuster="+genCacheBust(8), nil)
 	if err != nil {
 		os.Stdout.Write([]byte(err.Error()))
 		return SteamProfile{}
 	}
-
-	req.Header.Add("Cache-Control", "no-cache")
-	req.Header.Add("Pragma", "no-cache")
-	fmt.Println(req.Header)
 
 	resp, err := client.Do(req)
 	if err != nil {
