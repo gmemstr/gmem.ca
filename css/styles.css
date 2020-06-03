@@ -34,3 +34,14 @@ main {
 .experiment {
     padding: 5px;
 }
+
+#steam img {
+    margin-top: 5px;
+    display: block;
+}
+
+#steam span {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}

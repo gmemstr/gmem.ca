@@ -6,7 +6,7 @@ const fetchSteamStatus = async () => {
     experiment.html`
     <h2>Steam Status</h2>
     <p>SteamID: ${data.steamId} Online State: ${data.onlineState}</p>
-    ${data.onlineState === 'in-game' && data.inGameInfo !== null ? `<img src=${data.inGameInfo.logo}>${data.inGameInfo.name}` : ''}
+    ${data.onlineState === 'in-game' && data.inGameInfo[0] !== null ? `<img src=${data.inGameInfo[0].logo}><span>${data.inGameInfo[0].name}</span>` : ''}
     `
 }
 
