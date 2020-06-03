@@ -1,8 +1,8 @@
 const fetchSteamStatus = async () => {
-    let response = await fetch("https://cors-anywhere.herokuapp.com/https://gmem.ca/api/steam")
+    let response = await fetch("/api/steam")
     let data = await response.json()
     let experiment = new Experiment("steam")
-    experiment.html`SteamID: ${data.SteamID} Online State: ${data.OnlineState}`
+    experiment.html`SteamID: ${data.steamId} Online State: ${data.onlineState}`
 }
 
 const loadApp = async () => {
