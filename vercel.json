@@ -1,0 +1,7 @@
+{
+    "functions": {
+        "api/steam.go": {
+            "memory": 128
+        }
+    }
+}
