@@ -38,13 +38,14 @@ func getSteamData() SteamProfile {
 
 	req.Header.Add("Cache-Control", "no-cache")
 	resp, err := client.Do(req)
-
 	if err != nil {
 		os.Stdout.Write([]byte(err.Error()))
 		return SteamProfile{}
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
+	os.Stdout.Write([]byte(body[0:1000]))
+
 	var steamData SteamProfile
 	err = xml.Unmarshal([]byte(body), &steamData)
 	if err != nil {
